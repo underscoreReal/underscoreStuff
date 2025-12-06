@@ -309,6 +309,10 @@ local function createESPElements(player)
         BorderSizePixel = 0,
         ZIndex = 1,
     })
+
+    local boxFilled = Functions:Create("UIGradient", {
+        Parent = box,
+    })
     
     local boxStroke = Functions:Create("UIStroke", {
         Parent = box,
@@ -347,6 +351,7 @@ local function createESPElements(player)
         Parent = nameLabel,
         Thickness = 1,
         LineJoinMode = Enum.LineJoinMode.Miter,
+        Enabled = false
     })
     local nameGradient = Functions:Create("UIGradient", {
         Parent = nameLabel,
@@ -365,7 +370,8 @@ local function createESPElements(player)
     local healthbarOutline = Functions:Create("UIStroke", {
         Parent = healthbar,
         Thickness = 1,
-        LineJoinMode = Enum.LineJoinMode.Miter
+        LineJoinMode = Enum.LineJoinMode.Miter,
+        Enabled = false
     })
 
     local healthbarOutlineGradient = Functions:Create("UIGradient", {
@@ -390,6 +396,7 @@ local function createESPElements(player)
         Parent = healthText,
         Thickness = 1,
         LineJoinMode = Enum.LineJoinMode.Miter,
+        Enabled = false
     })
     local healthTextGradient = Functions:Create("UIGradient", {
         Parent = healthText,
@@ -411,6 +418,7 @@ local function createESPElements(player)
         Parent = distanceLabel,
         Thickness = 1,
         LineJoinMode = Enum.LineJoinMode.Miter,
+        Enabled = false
     })
     local distanceGradient = Functions:Create("UIGradient", {
         Parent = distanceLabel,
@@ -433,6 +441,7 @@ local function createESPElements(player)
         Thickness = 1,
         Color = Color3.new(1, 1, 1),
         LineJoinMode = Enum.LineJoinMode.Miter,
+        Enabled = false
     })
     local toolGradient = Functions:Create("UIGradient", {
         Parent = toolLabel,
@@ -444,6 +453,7 @@ local function createESPElements(player)
     return {
         container = container,
         box = box,
+        boxFilled = boxFilled,
         boxStroke = boxStroke,
         boxGradient = boxGradient,
         boxOutline = boxOutline,
@@ -562,11 +572,18 @@ local function createPlayerESP(player)
         
         if espLib.config.toggles.box then
             espData.box.Visible = true
-            espData.box.BackgroundTransparency = 1
+            espData.box.BackgroundTransparency = espLib.config.colors.box.filled and 0 or 1
             espData.box.Position = UDim2.new(0, screenPos.X - boxWidth / 2, 0, screenPos.Y - boxHeight / 2)
             espData.box.Size = UDim2.new(0, boxWidth, 0, boxHeight)
             espData.boxGradient.Color = ColorSequence.new(espLib.config.colors.box.colors)
             espData.boxGradient.Transparency = NumberSequence.new(espLib.config.colors.box.transparency)
+
+            if espLib.config.colors.box.filled then
+                espData.boxFilled.Color = ColorSequence.new(espLib.config.colors.box.filledcolors)
+                espData.boxFilled.Transparency = NumberSequence.new(espLib.config.colors.box.filledtransparency)
+                espData.boxFilled.Rotation = espLib.config.colors.box.rotation or 0
+            end
+
             Functions:SetElementTransparency(espData.boxStroke, alpha)
 
             if espLib.config.toggles.outlineBox then
@@ -590,6 +607,8 @@ local function createPlayerESP(player)
             Functions:SetElementTransparency(espData.nameLabel, alpha)
             if espData.nameStroke then
                 Functions:SetElementTransparency(espData.nameStroke, alpha)
+            else
+                espData.nameStroke.Enabled = false
             end
             if espData.nameGradient then
                 espData.nameGradient.Color = ColorSequence.new(espLib.config.colors.name.colors)
@@ -629,6 +648,12 @@ local function createPlayerESP(player)
                     espData.healthbarGradient.Color = ColorSequence.new(espLib.config.colors.healthBar.colors)
                 end
             espData.healthbarGradient.Transparency = NumberSequence.new(espLib.config.colors.healthBar.transparency)
+
+            if espData.healthbarOutline then
+                Functions:SetElementTransparency(espData.healthbarOutline, alpha)
+            else
+                espData.healthbarOutline.Enabled = false
+            end
             
             Functions:SetElementTransparency(espData.healthbar, alpha)
         else
@@ -647,6 +672,8 @@ local function createPlayerESP(player)
             Functions:SetElementTransparency(espData.healthText, alpha)
             if espData.healthTextStroke then
                 Functions:SetElementTransparency(espData.healthTextStroke, alpha)
+            else
+                espData.healthTextStroke.Enabled = false
             end
             if espData.healthTextGradient then
                 espData.healthTextGradient.Color = ColorSequence.new(espLib.config.colors.healthText.colors)
@@ -673,6 +700,8 @@ local function createPlayerESP(player)
             Functions:SetElementTransparency(espData.distanceLabel, alpha)
             if espData.distanceStroke then
                 Functions:SetElementTransparency(espData.distanceStroke, alpha)
+            else
+                espData.distanceStroke.Enabled = false
             end
             if espData.distanceGradient then
                 espData.distanceGradient.Color = ColorSequence.new(espLib.config.colors.distance.colors)
@@ -700,6 +729,8 @@ local function createPlayerESP(player)
             Functions:SetElementTransparency(espData.toolLabel, alpha)
             if espData.toolStroke then
                 Functions:SetElementTransparency(espData.toolStroke, alpha)
+            else
+                espData.toolStroke.Enabled = false
             end
             if espData.toolGradient then
                 espData.toolGradient.Color = ColorSequence.new(espLib.config.colors.tool.colors)
