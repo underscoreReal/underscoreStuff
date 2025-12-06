@@ -54,7 +54,7 @@ end
 local espObjects = {}
 
 espLib.config = {
-    enabled = true,
+    enabled = false,
     global = {
         dontFade = false,
         fadeTime = 0.5,
@@ -64,18 +64,18 @@ espLib.config = {
         Natural = false
     },
     toggles = {
-        box = true,
-        name = true,
-        distance = true,
-        healthBar = true,
-        healthText = true,
-        tool = true,
-        outlineBox = true,
-        outlineName = true,
-        outlineDistance = true,
-        outlineHealthBar = true,
-        outlineHealthText = true,
-        outlineTool = true,
+        box = false,
+        name = false,
+        distance = false,
+        healthBar = false,
+        healthText = false,
+        tool = false,
+        outlineBox = false,
+        outlineName = false,
+        outlineDistance = false,
+        outlineHealthBar = false,
+        outlineHealthText = false,
+        outlineTool = false,
     },
     colors = {
         box = {
@@ -139,7 +139,7 @@ espLib.config = {
                 NumberSequenceKeypoint.new(0.5, 0),
                 NumberSequenceKeypoint.new(1, 0),
             },
-            animated = true,
+            animated = false,
             animatedSpeed = 0.5,
         },
         healthText = {
