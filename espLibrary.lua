@@ -722,7 +722,7 @@ local function createPlayerESP(player)
     espObjects[player] = espData
 end
 
-local function initializeESP()
+espLib.initializeESP = function()
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= lplayer then
             createPlayerESP(player)
@@ -776,7 +776,7 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 if espLib.config.enabled then
-    initializeESP()
+    espLib.initializeESP()
 end
 
 return espLib
