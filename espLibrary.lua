@@ -54,7 +54,7 @@ end
 local espObjects = {}
 
 espLib.config = {
-    enabled = true,
+    enabled = false,
     global = {
         dontFade = false,
         fadeTime = 0.5,
@@ -64,14 +64,14 @@ espLib.config = {
         Natural = false
     },
     toggles = {
-        box = true,
-        name = true,
+        box = false,
+        name = false,
         distance = false,
         healthBar = false,
         healthText = false,
         tool = false,
-        outlineBox = true,
-        outlineName = true,
+        outlineBox = false,
+        outlineName = false,
         outlineDistance = false,
         outlineHealthBar = false,
         outlineHealthText = false,
