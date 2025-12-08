@@ -650,6 +650,7 @@ local function createPlayerESP(player)
             espData.healthbarGradient.Transparency = NumberSequence.new(espLib.config.colors.healthBar.transparency)
 
             if espData.healthbarOutline then
+                espData.healthbarOutline.Enabled = true
                 Functions:SetElementTransparency(espData.healthbarOutline, alpha)
             else
                 espData.healthbarOutline.Enabled = false
@@ -671,6 +672,7 @@ local function createPlayerESP(player)
             espData.healthText.AnchorPoint = Vector2.new(0.5, 0.5)
             Functions:SetElementTransparency(espData.healthText, alpha)
             if espData.healthTextStroke then
+                espData.healthTextStroke.Enabled = true
                 Functions:SetElementTransparency(espData.healthTextStroke, alpha)
             else
                 espData.healthTextStroke.Enabled = false
@@ -699,6 +701,7 @@ local function createPlayerESP(player)
             espData.distanceLabel.AnchorPoint = Vector2.new(0.5, 0)
             Functions:SetElementTransparency(espData.distanceLabel, alpha)
             if espData.distanceStroke then
+                espData.distanceStroke.Enabled = true
                 Functions:SetElementTransparency(espData.distanceStroke, alpha)
             else
                 espData.distanceStroke.Enabled = false
@@ -728,6 +731,7 @@ local function createPlayerESP(player)
             espData.toolLabel.AnchorPoint = Vector2.new(0.5, 0)
             Functions:SetElementTransparency(espData.toolLabel, alpha)
             if espData.toolStroke then
+                espData.toolStroke.Enabled = true
                 Functions:SetElementTransparency(espData.toolStroke, alpha)
             else
                 espData.toolStroke.Enabled = false
