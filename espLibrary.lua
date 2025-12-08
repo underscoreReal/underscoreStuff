@@ -54,7 +54,7 @@ end
 local espObjects = {}
 
 espLib.config = {
-    enabled = false,
+    enabled = true,
     global = {
         dontFade = false,
         fadeTime = 0.5,
@@ -64,14 +64,14 @@ espLib.config = {
         Natural = false
     },
     toggles = {
-        box = false,
-        name = false,
+        box = true,
+        name = true,
         distance = false,
         healthBar = false,
         healthText = false,
         tool = false,
-        outlineBox = false,
-        outlineName = false,
+        outlineBox = true,
+        outlineName = true,
         outlineDistance = false,
         outlineHealthBar = false,
         outlineHealthText = false,
@@ -605,21 +605,20 @@ local function createPlayerESP(player)
             espData.nameLabel.Size = UDim2.new(0, 120, 0, 18)
             espData.nameLabel.AnchorPoint = Vector2.new(0.5, 0.5)
             Functions:SetElementTransparency(espData.nameLabel, alpha)
-            if espData.nameStroke then
+
+            if espLib.config.toggles.outlineName then
+                espData.nameStroke.Enabled = true
                 Functions:SetElementTransparency(espData.nameStroke, alpha)
             else
                 espData.nameStroke.Enabled = false
             end
-            if espData.nameGradient then
-                espData.nameGradient.Color = ColorSequence.new(espLib.config.colors.name.colors)
-                espData.nameGradient.Transparency = NumberSequence.new(espLib.config.colors.name.transparency)
-                Functions:SetElementTransparency(espData.nameGradient, alpha)
-            end
-            if espData.nameStrokeGradient then
-                espData.nameStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineName.colors)
-                espData.nameStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineName.transparency)
-                Functions:SetElementTransparency(espData.nameStrokeGradient, alpha)
-            end
+            espData.nameGradient.Color = ColorSequence.new(espLib.config.colors.name.colors)
+            espData.nameGradient.Transparency = NumberSequence.new(espLib.config.colors.name.transparency)
+            Functions:SetElementTransparency(espData.nameGradient, alpha)
+
+            espData.nameStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineName.colors)
+            espData.nameStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineName.transparency)
+            Functions:SetElementTransparency(espData.nameStrokeGradient, alpha)
         else
             espData.nameLabel.Visible = false
         end
@@ -649,7 +648,7 @@ local function createPlayerESP(player)
                 end
             espData.healthbarGradient.Transparency = NumberSequence.new(espLib.config.colors.healthBar.transparency)
 
-            if espData.healthbarOutline then
+            if espLib.config.toggles.outlineHealthBar then
                 espData.healthbarOutline.Enabled = true
                 Functions:SetElementTransparency(espData.healthbarOutline, alpha)
             else
@@ -671,24 +670,22 @@ local function createPlayerESP(player)
             espData.healthText.Size = UDim2.new(0, 50, 0, 14)
             espData.healthText.AnchorPoint = Vector2.new(0.5, 0.5)
             Functions:SetElementTransparency(espData.healthText, alpha)
-            if espData.healthTextStroke then
+
+            if espLib.config.toggles.outlineHealthText then
                 espData.healthTextStroke.Enabled = true
                 Functions:SetElementTransparency(espData.healthTextStroke, alpha)
             else
                 espData.healthTextStroke.Enabled = false
             end
-            if espData.healthTextGradient then
-                espData.healthTextGradient.Color = ColorSequence.new(espLib.config.colors.healthText.colors)
-                espData.healthTextGradient.Transparency = NumberSequence.new(espLib.config.colors.healthText.transparency)
-                espData.healthTextGradient.Rotation = espLib.config.colors.healthText.rotation or 0
-                Functions:SetElementTransparency(espData.healthTextGradient, alpha)
-            end
-            if espData.healthTextStrokeGradient then
-                espData.healthTextStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineHealthText.colors)
-                espData.healthTextStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineHealthText.transparency)
-                espData.healthTextStrokeGradient.Rotation = espLib.config.colors.outlineHealthText.rotation or 0
-                Functions:SetElementTransparency(espData.healthTextStrokeGradient, alpha)
-            end
+            espData.healthTextGradient.Color = ColorSequence.new(espLib.config.colors.healthText.colors)
+            espData.healthTextGradient.Transparency = NumberSequence.new(espLib.config.colors.healthText.transparency)
+            espData.healthTextGradient.Rotation = espLib.config.colors.healthText.rotation or 0
+            Functions:SetElementTransparency(espData.healthTextGradient, alpha)
+    
+            espData.healthTextStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineHealthText.colors)
+            espData.healthTextStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineHealthText.transparency)
+            espData.healthTextStrokeGradient.Rotation = espLib.config.colors.outlineHealthText.rotation or 0
+            Functions:SetElementTransparency(espData.healthTextStrokeGradient, alpha)
         else
             espData.healthText.Visible = false
         end
@@ -700,24 +697,23 @@ local function createPlayerESP(player)
             espData.distanceLabel.Size = UDim2.new(0, 60, 0, 16)
             espData.distanceLabel.AnchorPoint = Vector2.new(0.5, 0)
             Functions:SetElementTransparency(espData.distanceLabel, alpha)
-            if espData.distanceStroke then
+
+            if espLib.config.toggles.outlineDistance then
                 espData.distanceStroke.Enabled = true
                 Functions:SetElementTransparency(espData.distanceStroke, alpha)
             else
                 espData.distanceStroke.Enabled = false
             end
-            if espData.distanceGradient then
-                espData.distanceGradient.Color = ColorSequence.new(espLib.config.colors.distance.colors)
-                espData.distanceGradient.Transparency = NumberSequence.new(espLib.config.colors.distance.transparency)
-                espData.distanceGradient.Rotation = espLib.config.colors.distance.rotation or 0
-                Functions:SetElementTransparency(espData.distanceGradient, alpha)
-            end
-            if espData.distanceStrokeGradient then
-                espData.distanceStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineDistance.colors)
-                espData.distanceStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineDistance.transparency)
-                espData.distanceStrokeGradient.Rotation = espLib.config.colors.outlineDistance.rotation or 0
-                Functions:SetElementTransparency(espData.distanceStrokeGradient, alpha)
-            end
+
+            espData.distanceGradient.Color = ColorSequence.new(espLib.config.colors.distance.colors)
+            espData.distanceGradient.Transparency = NumberSequence.new(espLib.config.colors.distance.transparency)
+            espData.distanceGradient.Rotation = espLib.config.colors.distance.rotation or 0
+            Functions:SetElementTransparency(espData.distanceGradient, alpha)
+
+            espData.distanceStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineDistance.colors)
+            espData.distanceStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineDistance.transparency)
+            espData.distanceStrokeGradient.Rotation = espLib.config.colors.outlineDistance.rotation or 0
+            Functions:SetElementTransparency(espData.distanceStrokeGradient, alpha)
         else
             espData.distanceLabel.Visible = false
         end
@@ -730,24 +726,21 @@ local function createPlayerESP(player)
             espData.toolLabel.Size = UDim2.new(0, 100, 0, 16)
             espData.toolLabel.AnchorPoint = Vector2.new(0.5, 0)
             Functions:SetElementTransparency(espData.toolLabel, alpha)
-            if espData.toolStroke then
+            if espLib.config.toggles.outlineTool then
                 espData.toolStroke.Enabled = true
                 Functions:SetElementTransparency(espData.toolStroke, alpha)
             else
                 espData.toolStroke.Enabled = false
             end
-            if espData.toolGradient then
-                espData.toolGradient.Color = ColorSequence.new(espLib.config.colors.tool.colors)
-                espData.toolGradient.Transparency = NumberSequence.new(espLib.config.colors.tool.transparency)
-                espData.toolGradient.Rotation = espLib.config.colors.tool.rotation or 0
-                Functions:SetElementTransparency(espData.toolGradient, alpha)
-            end
-            if espData.toolStrokeGradient then
-                espData.toolStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineTool.colors)
-                espData.toolStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineTool.transparency)
-                espData.toolStrokeGradient.Rotation = espLib.config.colors.outlineTool.rotation or 0
-                Functions:SetElementTransparency(espData.toolStrokeGradient, alpha)
-            end
+            espData.toolGradient.Color = ColorSequence.new(espLib.config.colors.tool.colors)
+            espData.toolGradient.Transparency = NumberSequence.new(espLib.config.colors.tool.transparency)
+            espData.toolGradient.Rotation = espLib.config.colors.tool.rotation or 0
+            Functions:SetElementTransparency(espData.toolGradient, alpha)
+
+            espData.toolStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineTool.colors)
+            espData.toolStrokeGradient.Transparency = NumberSequence.new(espLib.config.colors.outlineTool.transparency)
+            espData.toolStrokeGradient.Rotation = espLib.config.colors.outlineTool.rotation or 0
+            Functions:SetElementTransparency(espData.toolStrokeGradient, alpha)
         else
             espData.toolLabel.Visible = false
         end
