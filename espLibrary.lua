@@ -61,7 +61,7 @@ espLib.config = {
         useTeamColor = false
     },
     teamESPToggles = {
-        Natural = false
+        Neutral = false
     },
     toggles = {
         box = false,
