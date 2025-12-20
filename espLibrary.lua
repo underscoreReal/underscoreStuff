@@ -61,7 +61,7 @@ espLib.config = {
         useTeamColor = false
     },
     teamESPToggles = {
-        Neutral = false
+        Natural = false
     },
     toggles = {
         box = false,
@@ -263,23 +263,22 @@ local function shouldRenderPlayer(player)
         return false
     end
     
-    local hasTeamsEnabled = false
-    for _, enabled in pairs(espLib.config.teamESPToggles) do
-        if enabled then
-            hasTeamsEnabled = true
-            break
-        end
+    local hasTeamConfig = false
+    for _ in pairs(espLib.config.teamESPToggles) do
+        hasTeamConfig = true
+        break
     end
     
-    if not hasTeamsEnabled then
+    if not hasTeamConfig then
         return true
     end
     
-    if player.Team and espLib.config.teamESPToggles[player.Team.Name] then
-        return true
+    if not player.Team then
+        return false
     end
     
-    return false
+    local teamToggle = espLib.config.teamESPToggles[player.Team.Name]
+    return teamToggle == true
 end
 
 local function getESPGui()
@@ -572,7 +571,9 @@ local function createPlayerESP(player)
         
         local hrpSize = hrp.Size.Y
         local distance = (Camera.CFrame.Position - hrp.Position).Magnitude
-        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
+        local viewportSize = Camera.ViewportSize
+        local aspectRatio = viewportSize.X / viewportSize.Y
+        local scaleFactor = (hrpSize * math.min(viewportSize.X, viewportSize.Y)) / (screenPos.Z * 2)
         local boxWidth = 3 * scaleFactor
         local boxHeight = 4.5 * scaleFactor
         
