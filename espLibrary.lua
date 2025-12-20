@@ -565,10 +565,11 @@ local function createPlayerESP(player)
             showESP(espData)
         end
         
+        local hrpSize = hrp.Size.Y
         local distance = (Camera.CFrame.Position - hrp.Position).Magnitude
-        local scaleFactor = 1 / (distance * 0.006)
-        local boxWidth = 4 * scaleFactor
-        local boxHeight = 5.5 * scaleFactor
+        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
+        local boxWidth = 3 * scaleFactor
+        local boxHeight = 4.5 * scaleFactor
         local res = espLib.config.global.resolution or 1
         local adjustedY = screenPos.Y / res
         
