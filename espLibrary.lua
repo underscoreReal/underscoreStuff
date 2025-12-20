@@ -263,15 +263,13 @@ local function shouldRenderPlayer(player)
         return false
     end
     
-    local hasTeamsEnabled = false
-    for _, enabled in pairs(espLib.config.teamESPToggles) do
-        if enabled == true then
-            hasTeamsEnabled = true
-            break
-        end
+    local hasTeamConfig = false
+    for _ in pairs(espLib.config.teamESPToggles) do
+        hasTeamConfig = true
+        break
     end
     
-    if not hasTeamsEnabled then
+    if not hasTeamConfig then
         return true
     end
     
@@ -280,6 +278,11 @@ local function shouldRenderPlayer(player)
     end
     
     local teamToggle = espLib.config.teamESPToggles[player.Team.Name]
+    
+    if teamToggle == nil then
+        return true
+    end
+    
     return teamToggle == true
 end
 
