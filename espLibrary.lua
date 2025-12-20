@@ -567,10 +567,10 @@ local function createPlayerESP(player)
         
         local hrpSize = hrp.Size.Y
         local distance = (Camera.CFrame.Position - hrp.Position).Magnitude
-        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
+        local res = espLib.config.global.resolution or 1
+        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2 * res)
         local boxWidth = 3 * scaleFactor
         local boxHeight = 4.5 * scaleFactor
-        local res = espLib.config.global.resolution or 1
         local adjustedY = screenPos.Y / res
         
         if espLib.config.toggles.box then
