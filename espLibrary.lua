@@ -58,8 +58,7 @@ espLib.config = {
     global = {
         dontFade = false,
         fadeTime = 0.5,
-        useTeamColor = false,
-        resolution = 1
+        useTeamColor = false
     },
     teamESPToggles = {
         Natural = false
@@ -567,16 +566,14 @@ local function createPlayerESP(player)
         
         local hrpSize = hrp.Size.Y
         local distance = (Camera.CFrame.Position - hrp.Position).Magnitude
-        local res = espLib.config.global.resolution or 1
-        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2 * res)
+        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
         local boxWidth = 3 * scaleFactor
         local boxHeight = 4.5 * scaleFactor
-        local adjustedY = screenPos.Y / res
         
         if espLib.config.toggles.box then
             espData.box.Visible = true
             espData.box.BackgroundTransparency = espLib.config.colors.box.filled and 0 or 1
-            espData.box.Position = UDim2.new(0, screenPos.X - boxWidth / 2, 0, adjustedY - boxHeight / 2)
+            espData.box.Position = UDim2.new(0, screenPos.X - boxWidth / 2, 0, screenPos.Y - boxHeight / 2)
             espData.box.Size = UDim2.new(0, boxWidth, 0, boxHeight)
             espData.boxGradient.Color = ColorSequence.new(espLib.config.colors.box.colors)
             espData.boxGradient.Transparency = NumberSequence.new(espLib.config.colors.box.transparency)
@@ -592,7 +589,7 @@ local function createPlayerESP(player)
 
             if espLib.config.toggles.outlineBox then
                 espData.boxOutline.Visible = true
-                espData.boxOutline.Position = UDim2.new(0, (screenPos.X - boxWidth / 2) + 1, 0, adjustedY - boxHeight / 2 + 1)
+                espData.boxOutline.Position = UDim2.new(0, (screenPos.X - boxWidth / 2) + 1, 0, screenPos.Y - boxHeight / 2 + 1)
                 espData.boxOutline.Size = UDim2.new(0, boxWidth - 2, 0, boxHeight - 2)
                 espData.boxOutlineStroke.Color = Color3.new(1, 1, 1)
                 espData.boxOutlineStrokeGradient.Color = ColorSequence.new(espLib.config.colors.outlineBox.colors)
@@ -609,7 +606,7 @@ local function createPlayerESP(player)
         if espLib.config.toggles.name then
             espData.nameLabel.Visible = true
             espData.nameLabel.Text = player.Name
-            espData.nameLabel.Position = UDim2.new(0, screenPos.X, 0, adjustedY - boxHeight / 2 - 13)
+            espData.nameLabel.Position = UDim2.new(0, screenPos.X, 0, screenPos.Y - boxHeight / 2 - 13)
             espData.nameLabel.Size = UDim2.new(0, 120, 0, 18)
             espData.nameLabel.AnchorPoint = Vector2.new(0.5, 0.5)
             Functions:SetElementTransparency(espData.nameLabel, alpha)
@@ -637,7 +634,7 @@ local function createPlayerESP(player)
             local barWidth = espLib.config.colors.healthBar.width or 2.5
             espData.healthbar.Visible = true
             
-            espData.healthbar.Position = UDim2.new(0, screenPos.X - boxWidth / 2 - barWidth - 6, 0, adjustedY - boxHeight / 2 + boxHeight * (1 - healthPercent))
+            espData.healthbar.Position = UDim2.new(0, screenPos.X - boxWidth / 2 - barWidth - 6, 0, screenPos.Y - boxHeight / 2 + boxHeight * (1 - healthPercent))
             espData.healthbar.Size = UDim2.new(0, barWidth, 0, boxHeight * healthPercent)
                 if espLib.config.colors.healthBar.animated then
                     local speed = espLib.config.colors.healthBar.animatedSpeed or 1
@@ -679,7 +676,7 @@ local function createPlayerESP(player)
             espData.healthText.Visible = humanoid.Health < humanoid.MaxHealth
             espData.healthText.Text = tostring(healthPercent) .. "%"
             local barWidth = espLib.config.colors.healthBar.width or 2.5
-            espData.healthText.Position = UDim2.new(0, screenPos.X - boxWidth / 2 - barWidth - 6, 0, adjustedY - boxHeight / 2 + boxHeight * (1 - healthPercent / 100) + 3)
+            espData.healthText.Position = UDim2.new(0, screenPos.X - boxWidth / 2 - barWidth - 6, 0, screenPos.Y - boxHeight / 2 + boxHeight * (1 - healthPercent / 100) + 3)
             espData.healthText.Size = UDim2.new(0, 50, 0, 14)
             espData.healthText.AnchorPoint = Vector2.new(0.5, 0.5)
             Functions:SetElementTransparency(espData.healthText, alpha)
@@ -705,7 +702,7 @@ local function createPlayerESP(player)
         if espLib.config.toggles.distance then
             espData.distanceLabel.Visible = true
             espData.distanceLabel.Text = string.format("[%d]", math.floor(distance))
-            espData.distanceLabel.Position = UDim2.new(0, screenPos.X, 0, adjustedY + boxHeight / 2 + 15)
+            espData.distanceLabel.Position = UDim2.new(0, screenPos.X, 0, screenPos.Y + boxHeight / 2 + 15)
             espData.distanceLabel.Size = UDim2.new(0, 60, 0, 16)
             espData.distanceLabel.AnchorPoint = Vector2.new(0.5, 0)
             Functions:SetElementTransparency(espData.distanceLabel, alpha)
