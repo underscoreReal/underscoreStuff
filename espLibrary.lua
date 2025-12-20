@@ -573,9 +573,7 @@ local function createPlayerESP(player)
         
         local hrpSize = hrp.Size.Y
         local distance = (Camera.CFrame.Position - hrp.Position).Magnitude
-        local viewportSize = Camera.ViewportSize
-        local aspectRatio = viewportSize.X / viewportSize.Y
-        local scaleFactor = (hrpSize * math.min(viewportSize.X, viewportSize.Y)) / (screenPos.Z * 2)
+        local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
         local boxWidth = 3 * scaleFactor
         local boxHeight = 4.5 * scaleFactor
         
