@@ -263,13 +263,15 @@ local function shouldRenderPlayer(player)
         return false
     end
     
-    local hasTeamConfig = false
-    for _ in pairs(espLib.config.teamESPToggles) do
-        hasTeamConfig = true
-        break
+    local hasTeamsEnabled = false
+    for _, enabled in pairs(espLib.config.teamESPToggles) do
+        if enabled == true then
+            hasTeamsEnabled = true
+            break
+        end
     end
     
-    if not hasTeamConfig then
+    if not hasTeamsEnabled then
         return true
     end
     
