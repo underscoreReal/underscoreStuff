@@ -1,3 +1,4 @@
+
 local espLib = {}
 
 local RunService = game:GetService("RunService")
@@ -569,18 +570,26 @@ local function createPlayerESP(player)
         local scaleFactor = (hrpSize * Camera.ViewportSize.Y) / (screenPos.Z * 2)
         local boxWidth = 3 * scaleFactor
         local boxHeight = 4.5 * scaleFactor
+        local teamColorSeq
+        if espLib.config.global.useTeamColor and player.Team then
+            local col = player.Team.TeamColor and player.Team.TeamColor.Color or player.TeamColor.Color
+            teamColorSeq = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, col),
+                ColorSequenceKeypoint.new(1, col),
+            })
+        end
         
         if espLib.config.toggles.box then
             espData.box.Visible = true
             espData.box.BackgroundTransparency = espLib.config.colors.box.filled and 0 or 1
             espData.box.Position = UDim2.new(0, screenPos.X - boxWidth / 2, 0, screenPos.Y - boxHeight / 2)
             espData.box.Size = UDim2.new(0, boxWidth, 0, boxHeight)
-            espData.boxGradient.Color = ColorSequence.new(espLib.config.colors.box.colors)
+            espData.boxGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.box.colors)
             espData.boxGradient.Transparency = NumberSequence.new(espLib.config.colors.box.transparency)
             espData.boxGradient.Rotation = espLib.config.colors.box.rotation
 
             if espLib.config.colors.box.filled then
-                espData.boxFilled.Color = ColorSequence.new(espLib.config.colors.box.filledcolors)
+                espData.boxFilled.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.box.filledcolors)
                 espData.boxFilled.Transparency = NumberSequence.new(espLib.config.colors.box.filledtransparency)
                 espData.boxFilled.Rotation = espLib.config.colors.box.filledrotation
             end
@@ -621,7 +630,7 @@ local function createPlayerESP(player)
             else
                 espData.nameStroke.Enabled = false
             end
-            espData.nameGradient.Color = ColorSequence.new(espLib.config.colors.name.colors)
+            espData.nameGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.name.colors)
             espData.nameGradient.Transparency = NumberSequence.new(espLib.config.colors.name.transparency)
             espData.nameGradient.Rotation = espLib.config.colors.name.rotation
             Functions:SetElementTransparency(espData.nameGradient, alpha)
@@ -648,9 +657,9 @@ local function createPlayerESP(player)
                         local col = a:Lerp(b, t)
                         table.insert(kp, ColorSequenceKeypoint.new(orig[i].Time, col))
                     end
-                    espData.healthbarGradient.Color = ColorSequence.new(kp)
+                    espData.healthbarGradient.Color = teamColorSeq or ColorSequence.new(kp)
                 else
-                    espData.healthbarGradient.Color = ColorSequence.new(espLib.config.colors.healthBar.colors)
+                    espData.healthbarGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.healthBar.colors)
                 end
             espData.healthbarGradient.Transparency = NumberSequence.new(espLib.config.colors.healthBar.transparency)
 
@@ -691,7 +700,7 @@ local function createPlayerESP(player)
             else
                 espData.healthTextStroke.Enabled = false
             end
-            espData.healthTextGradient.Color = ColorSequence.new(espLib.config.colors.healthText.colors)
+            espData.healthTextGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.healthText.colors)
             espData.healthTextGradient.Transparency = NumberSequence.new(espLib.config.colors.healthText.transparency)
             espData.healthTextGradient.Rotation = espLib.config.colors.healthText.rotation
             Functions:SetElementTransparency(espData.healthTextGradient, alpha)
@@ -718,7 +727,7 @@ local function createPlayerESP(player)
                 espData.distanceStroke.Enabled = false
             end
 
-            espData.distanceGradient.Color = ColorSequence.new(espLib.config.colors.distance.colors)
+            espData.distanceGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.distance.colors)
             espData.distanceGradient.Transparency = NumberSequence.new(espLib.config.colors.distance.transparency)
             espData.distanceGradient.Rotation = espLib.config.colors.distance.rotation
             Functions:SetElementTransparency(espData.distanceGradient, alpha)
@@ -744,7 +753,7 @@ local function createPlayerESP(player)
             else
                 espData.toolStroke.Enabled = false
             end
-            espData.toolGradient.Color = ColorSequence.new(espLib.config.colors.tool.colors)
+            espData.toolGradient.Color = teamColorSeq or ColorSequence.new(espLib.config.colors.tool.colors)
             espData.toolGradient.Transparency = NumberSequence.new(espLib.config.colors.tool.transparency)
             espData.toolGradient.Rotation = espLib.config.colors.tool.rotation
             Functions:SetElementTransparency(espData.toolGradient, alpha)
